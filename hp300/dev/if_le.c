@@ -155,8 +155,7 @@ struct	le_softc {
  * record.  System will initialize the interface when it is ready
  * to accept packets.
  */
-leattach(hd)
-	struct hp_device *hd;
+leattach(struct hp_device *hd)
 {
 	register struct lereg0 *ler0;
 	register struct lereg2 *ler2;
@@ -228,8 +227,7 @@ leattach(hd)
  * Setup the logical address filter
  */
 void
-lesetladrf(sc)
-	register struct le_softc *sc;
+lesetladrf(register struct le_softc *sc)
 {
 	register volatile struct lereg2 *ler2 = sc->sc_r2;
 	register struct ifnet *ifp = &sc->sc_if;
@@ -333,8 +331,7 @@ ledrinit(ler2, le)
 #endif
 }
 
-lereset(unit)
-	register int unit;
+lereset(register int unit)
 {
 	register struct le_softc *le = &le_softc[unit];
 	register struct lereg0 *ler0 = le->sc_r0;
@@ -383,8 +380,7 @@ lereset(unit)
 /*
  * Initialization of interface
  */
-leinit(unit)
-	int unit;
+leinit(int unit)
 {
 	register struct ifnet *ifp = &le_softc[unit].sc_if;
 	register struct ifaddr *ifa;
@@ -410,8 +406,7 @@ leinit(unit)
  * off of the interface queue, and copy it to the interface
  * before starting the output.
  */
-lestart(ifp)
-	struct ifnet *ifp;
+lestart(struct ifnet *ifp)
 {
 	register struct le_softc *le = &le_softc[ifp->if_unit];
 	register struct letmd *tmd;
@@ -453,8 +448,7 @@ lestart(ifp)
 	return (0);
 }
 
-leintr(unit)
-	register int unit;
+leintr(register int unit)
 {
 	register struct le_softc *le = &le_softc[unit];
 	register struct lereg0 *ler0 = le->sc_r0;
@@ -564,8 +558,7 @@ lexint(unit)
  * Decapsulate packet based on type and pass to type specific
  * higher-level input routine.
  */
-lerint(unit)
-	int unit;
+lerint(int unit)
 {
 	register struct le_softc *le = &le_softc[unit];
 	register int bix = le->sc_rmd;
@@ -630,10 +623,7 @@ lerint(unit)
 	le->sc_rmd = bix;
 }
 
-leread(unit, buf, len)
-	int unit;
-	char *buf;
-	int len;
+leread(int unit, char *buf, int len)
 {
 	register struct le_softc *le = &le_softc[unit];
 	register struct ether_header *et;
@@ -717,9 +707,7 @@ leread(unit, buf, len)
  * Routine to copy from mbuf chain to transmit
  * buffer in board local memory.
  */
-leput(lebuf, m)
-	register char *lebuf;
-	register struct mbuf *m;
+leput(register char *lebuf, register struct mbuf *m)
 {
 	register struct mbuf *mp;
 	register int len, tlen = 0;

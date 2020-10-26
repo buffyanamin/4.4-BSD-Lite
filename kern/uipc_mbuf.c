@@ -526,9 +526,7 @@ bad:
  * attempts to restore the chain to its original state.
  */
 struct mbuf *
-m_split(m0, len0, wait)
-	register struct mbuf *m0;
-	int len0, wait;
+m_split(register struct mbuf *m0, int len0, int wait)
 {
 	register struct mbuf *m, *n;
 	unsigned len = len0, remain;
@@ -588,11 +586,7 @@ extpacket:
  * Routine to copy from device local memory into mbufs.
  */
 struct mbuf *
-m_devget(buf, totlen, off0, ifp, copy)
-	char *buf;
-	int totlen, off0;
-	struct ifnet *ifp;
-	void (*copy)();
+m_devget(char *buf, int totlen, int off0, struct ifnet *ifp, void (*copy)())
 {
 	register struct mbuf *m;
 	struct mbuf *top = 0, **mp = &top;

@@ -92,8 +92,7 @@ static char *sprint_d __P((u_int, char *, int));
  * list of "active" interfaces.
  */
 void
-if_attach(ifp)
-	struct ifnet *ifp;
+if_attach(struct ifnet *ifp)
 {
 	unsigned socksize, ifasize;
 	int namelen, unitlen, masklen, ether_output();
@@ -164,8 +163,7 @@ if_attach(ifp)
  */
 /*ARGSUSED*/
 struct ifaddr *
-ifa_ifwithaddr(addr)
-	register struct sockaddr *addr;
+ifa_ifwithaddr(register struct sockaddr *addr)
 {
 	register struct ifnet *ifp;
 	register struct ifaddr *ifa;
@@ -189,8 +187,7 @@ ifa_ifwithaddr(addr)
  */
 /*ARGSUSED*/
 struct ifaddr *
-ifa_ifwithdstaddr(addr)
-	register struct sockaddr *addr;
+ifa_ifwithdstaddr(register struct sockaddr *addr)
 {
 	register struct ifnet *ifp;
 	register struct ifaddr *ifa;
@@ -211,8 +208,7 @@ ifa_ifwithdstaddr(addr)
  * is most specific found.
  */
 struct ifaddr *
-ifa_ifwithnet(addr)
-	struct sockaddr *addr;
+ifa_ifwithnet(struct sockaddr *addr)
 {
 	register struct ifnet *ifp;
 	register struct ifaddr *ifa;
@@ -250,8 +246,7 @@ ifa_ifwithnet(addr)
  * Find an interface using a specific address family
  */
 struct ifaddr *
-ifa_ifwithaf(af)
-	register int af;
+ifa_ifwithaf(register int af)
 {
 	register struct ifnet *ifp;
 	register struct ifaddr *ifa;
@@ -268,9 +263,7 @@ ifa_ifwithaf(af)
  * a given address.
  */
 struct ifaddr *
-ifaof_ifpforaddr(addr, ifp)
-	struct sockaddr *addr;
-	register struct ifnet *ifp;
+ifaof_ifpforaddr(struct sockaddr *addr, register struct ifnet *ifp)
 {
 	register struct ifaddr *ifa;
 	register char *cp, *cp2, *cp3;
@@ -311,10 +304,9 @@ ifaof_ifpforaddr(addr, ifp)
  * This should be moved to /sys/net/link.c eventually.
  */
 void
-link_rtrequest(cmd, rt, sa)
-	int cmd;
-	register struct rtentry *rt;
-	struct sockaddr *sa;
+link_rtrequest(int cmd,
+               register struct rtentry *rt,
+               struct sockaddr *sa)
 {
 	register struct ifaddr *ifa;
 	struct sockaddr *dst;
@@ -338,8 +330,7 @@ link_rtrequest(cmd, rt, sa)
  * NOTE: must be called at splnet or eqivalent.
  */
 void
-if_down(ifp)
-	register struct ifnet *ifp;
+if_down(register struct ifnet *ifp)
 {
 	register struct ifaddr *ifa;
 
@@ -356,8 +347,7 @@ if_down(ifp)
  * NOTE: must be called at splnet or eqivalent.
  */
 void
-if_up(ifp)
-	register struct ifnet *ifp;
+if_up(register struct ifnet *ifp)
 {
 	register struct ifaddr *ifa;
 
@@ -374,8 +364,7 @@ if_up(ifp)
  * Flush an interface queue.
  */
 void
-if_qflush(ifq)
-	register struct ifqueue *ifq;
+if_qflush(register struct ifqueue *ifq)
 {
 	register struct mbuf *m, *n;
 
@@ -395,8 +384,7 @@ if_qflush(ifq)
  * call the appropriate interface routine on expiration.
  */
 void
-if_slowtimo(arg)
-	void *arg;
+if_slowtimo(void *arg)
 {
 	register struct ifnet *ifp;
 	int s = splimp();
@@ -416,8 +404,7 @@ if_slowtimo(arg)
  * interface structure pointer.
  */
 struct ifnet *
-ifunit(name)
-	register char *name;
+ifunit(register char *name)
 {
 	register char *cp;
 	register struct ifnet *ifp;
@@ -455,11 +442,10 @@ ifunit(name)
  * Interface ioctls.
  */
 int
-ifioctl(so, cmd, data, p)
-	struct socket *so;
-	int cmd;
-	caddr_t data;
-	struct proc *p;
+ifioctl(struct socket *so,
+        int cmd,
+        caddr_t data,
+        struct proc *p)
 {
 	register struct ifnet *ifp;
 	register struct ifreq *ifr;
@@ -586,10 +572,9 @@ ifioctl(so, cmd, data, p)
  * other information.
  */
 /*ARGSUSED*/
+/* usage example see: https://gist.github.com/OrangeTide/909204 */
 int
-ifconf(cmd, data)
-	int cmd;
-	caddr_t data;
+ifconf(int cmd, caddr_t data)
 {
 	register struct ifconf *ifc = (struct ifconf *)data;
 	register struct ifnet *ifp = ifnet;

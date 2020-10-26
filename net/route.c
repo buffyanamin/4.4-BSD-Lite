@@ -90,9 +90,7 @@ rtalloc(ro)
 }
 
 struct rtentry *
-rtalloc1(dst, report)
-	register struct sockaddr *dst;
-	int report;
+rtalloc1(register struct sockaddr *dst, int report)
 {
 	register struct radix_node_head *rnh = rt_tables[dst->sa_family];
 	register struct rtentry *rt;

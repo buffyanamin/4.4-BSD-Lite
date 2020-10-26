@@ -416,12 +416,7 @@ done:
 }
 
 int
-user_page_fault (p, map, addr, ftype, type)
-struct proc *p;
-vm_map_t map;
-caddr_t addr;
-vm_prot_t ftype;
-int type;
+user_page_fault (struct proc *p, vm_map_t map, caddr_t addr, vm_prot_t ftype, int type)
 {
 	struct vmspace *vm;
 	vm_offset_t va;
@@ -473,8 +468,7 @@ int type;
 }
 
 int
-user_write_fault (addr)
-void *addr;
+user_write_fault (void *addr)
 {
 	if (user_page_fault (curproc, &curproc->p_vmspace->vm_map,
 			     addr, VM_PROT_READ | VM_PROT_WRITE,
@@ -485,10 +479,7 @@ void *addr;
 }
 
 int
-copyout (from, to, len)
-void *from;
-void *to;
-u_int len;
+copyout (void *from, void *to, u_int len)
 {
 	u_int *pte, *pde;
 	int rest_of_page;

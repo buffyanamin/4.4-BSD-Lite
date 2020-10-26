@@ -101,11 +101,10 @@ loopattach(n)
 }
 
 int
-looutput(ifp, m, dst, rt)
-	struct ifnet *ifp;
-	register struct mbuf *m;
-	struct sockaddr *dst;
-	register struct rtentry *rt;
+looutput(struct ifnet *ifp,
+         register struct mbuf *m,
+         struct sockaddr *dst,
+         register struct rtentry *rt)
 {
 	int s, isr;
 	register struct ifqueue *ifq = 0;

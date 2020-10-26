@@ -92,11 +92,10 @@ extern	struct ifnet loif;
  * Assumes that ifp is actually pointer to arpcom structure.
  */
 int
-ether_output(ifp, m0, dst, rt0)
-	register struct ifnet *ifp;
-	struct mbuf *m0;
-	struct sockaddr *dst;
-	struct rtentry *rt0;
+ether_output(register struct ifnet *ifp,
+             struct mbuf *m0,
+             struct sockaddr *dst,
+             struct rtentry *rt0)
 {
 	short type;
 	int s, error = 0;
@@ -302,10 +301,7 @@ bad:
  * the ether header, which is provided separately.
  */
 void
-ether_input(ifp, eh, m)
-	struct ifnet *ifp;
-	register struct ether_header *eh;
-	struct mbuf *m;
+ether_input(struct ifnet *ifp, register struct ether_header *eh, struct mbuf *m)
 {
 	register struct ifqueue *inq;
 	register struct llc *l;
@@ -483,8 +479,7 @@ ether_sprintf(ap)
  * Perform common duties while attaching to interface list
  */
 void
-ether_ifattach(ifp)
-	register struct ifnet *ifp;
+ether_ifattach(register struct ifnet *ifp)
 {
 	register struct ifaddr *ifa;
 	register struct sockaddr_dl *sdl;
