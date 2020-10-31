@@ -425,9 +425,7 @@ out:	if (((m = m0)->m_flags & M_PKTHDR) && (m->m_pkthdr.len < totlen))
 }
 
 static struct mbuf *
-rt_msg1(type, rtinfo)
-	int type;
-	register struct rt_addrinfo *rtinfo;
+rt_msg1(int type, register struct rt_addrinfo *rtinfo)
 {
 	register struct rt_msghdr *rtm;
 	register struct mbuf *m;
@@ -477,11 +475,10 @@ rt_msg1(type, rtinfo)
 }
 
 static int
-rt_msg2(type, rtinfo, cp, w)
-	int type;
-	register struct rt_addrinfo *rtinfo;
-	caddr_t cp;
-	struct walkarg *w;
+rt_msg2(int type,
+        register struct rt_addrinfo *rtinfo,
+        caddr_t cp,
+        struct walkarg *w)
 {
 	register int i;
 	int len, dlen, second_time = 0;
@@ -555,9 +552,10 @@ again:
  * destination.
  */
 void
-rt_missmsg(type, rtinfo, flags, error)
-	int type, flags, error;
-	register struct rt_addrinfo *rtinfo;
+rt_missmsg(int type,
+           register struct rt_addrinfo *rtinfo,
+           int flags,
+           int error)
 {
 	register struct rt_msghdr *rtm;
 	register struct mbuf *m;
@@ -581,8 +579,7 @@ rt_missmsg(type, rtinfo, flags, error)
  * socket indicating that the status of a network interface has changed.
  */
 void
-rt_ifmsg(ifp)
-	register struct ifnet *ifp;
+rt_ifmsg(register struct ifnet *ifp)
 {
 	register struct if_msghdr *ifm;
 	struct mbuf *m;

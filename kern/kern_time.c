@@ -290,8 +290,7 @@ setitimer(p, uap, retval)
  * SIGALRM calls to be compressed into one.
  */
 void
-realitexpire(arg)
-	void *arg;
+realitexpire(void *arg)
 {
 	register struct proc *p;
 	int s;

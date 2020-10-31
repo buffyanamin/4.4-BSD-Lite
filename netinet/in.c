@@ -53,8 +53,7 @@
  * Return the network number from an internet address.
  */
 u_long
-in_netof(in)
-	struct in_addr in;
+in_netof(struct in_addr in)
 {
 	register u_long i = ntohl(in.s_addr);
 	register u_long net;
@@ -91,8 +90,7 @@ int subnetsarelocal = SUBNETSARELOCAL;
  * is true, this includes other subnets of the local net.
  * Otherwise, it includes only the directly-connected (sub)nets.
  */
-in_localaddr(in)
-	struct in_addr in;
+in_localaddr(struct in_addr in)
 {
 	register u_long i = ntohl(in.s_addr);
 	register struct in_ifaddr *ia;
@@ -114,8 +112,7 @@ in_localaddr(in)
  * that may not be forwarded, or whether datagrams to that destination
  * may be forwarded.
  */
-in_canforward(in)
-	struct in_addr in;
+in_canforward(struct in_addr in)
 {
 	register u_long i = ntohl(in.s_addr);
 	register u_long net;
@@ -134,8 +131,7 @@ in_canforward(in)
  * Trim a mask in a sockaddr
  */
 void
-in_socktrim(ap)
-struct sockaddr_in *ap;
+in_socktrim(struct sockaddr_in *ap)
 {
     register char *cplim = (char *) &ap->sin_addr;
     register char *cp = (char *) (&ap->sin_addr + 1);
@@ -156,11 +152,10 @@ extern	struct ifnet loif;
  * Ifp is 0 if not an interface-specific ioctl.
  */
 /* ARGSUSED */
-in_control(so, cmd, data, ifp)
-	struct socket *so;
-	int cmd;
-	caddr_t data;
-	register struct ifnet *ifp;
+in_control(struct socket *so,
+           int cmd,
+           caddr_t data,
+           register struct ifnet *ifp)
 {
 	register struct ifreq *ifr = (struct ifreq *)data;
 	register struct in_ifaddr *ia = 0;
@@ -249,6 +244,7 @@ in_control(so, cmd, data, ifp)
 			return (EADDRNOTAVAIL);
 		break;
 	}
+
 	switch (cmd) {
 
 	case SIOCGIFADDR:
@@ -377,13 +373,12 @@ in_control(so, cmd, data, ifp)
  * Delete any existing route for an interface.
  */
 void
-in_ifscrub(ifp, ia)
-	register struct ifnet *ifp;
-	register struct in_ifaddr *ia;
+in_ifscrub(register struct ifnet *ifp,
+           register struct in_ifaddr *ia)
 {
 
 	if ((ia->ia_flags & IFA_ROUTE) == 0)
-		return;
+        return;
 	if (ifp->if_flags & (IFF_LOOPBACK|IFF_POINTOPOINT))
 		rtinit(&(ia->ia_ifa), (int)RTM_DELETE, RTF_HOST);
 	else
@@ -395,11 +390,10 @@ in_ifscrub(ifp, ia)
  * Initialize an interface's internet address
  * and routing table entry.
  */
-in_ifinit(ifp, ia, sin, scrub)
-	register struct ifnet *ifp;
-	register struct in_ifaddr *ia;
-	struct sockaddr_in *sin;
-	int scrub;
+in_ifinit(register struct ifnet *ifp,
+          register struct in_ifaddr *ia,
+          register struct in_ifaddr *sin,
+          int scrub)
 {
 	register u_long i = ntohl(sin->sin_addr.s_addr);
 	struct sockaddr_in oldaddr;
@@ -483,9 +477,7 @@ in_ifinit(ifp, ia, sin, scrub)
 /*
  * Return 1 if the address might be a local broadcast address.
  */
-in_broadcast(in, ifp)
-	struct in_addr in;
-        struct ifnet *ifp;
+in_broadcast(struct in_addr in, struct ifnet *ifp)
 {
 	register struct ifaddr *ifa;
 	u_long t;

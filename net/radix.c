@@ -699,9 +699,7 @@ rn_walktree(h, f, w)
 }
 
 int
-rn_inithead(head, off)
-	void **head;
-	int off;
+rn_inithead(void **head, int off)
 {
 	register struct radix_node_head *rnh;
 	register struct radix_node *t, *tt, *ttt;

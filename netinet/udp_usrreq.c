@@ -467,10 +467,11 @@ u_long	udp_recvspace = 40 * (1024 + sizeof(struct sockaddr_in));
 
 /*ARGSUSED*/
 int
-udp_usrreq(so, req, m, addr, control)
-	struct socket *so;
-	int req;
-	struct mbuf *m, *addr, *control;
+udp_usrreq(struct socket *so,
+           int req,
+           struct mbuf *m,
+           struct mbuf *addr,
+           struct mbuf *control)
 {
 	struct inpcb *inp = sotoinpcb(so);
 	int error = 0;

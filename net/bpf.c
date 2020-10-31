@@ -1051,9 +1051,7 @@ bpf_mcopy(src_arg, dst_arg, len)
  * Incoming linkage from device drivers, when packet is in an mbuf chain.
  */
 void
-bpf_mtap(arg, m)
-	caddr_t arg;
-	struct mbuf *m;
+bpf_mtap(caddr_t arg, struct mbuf *m)
 {
 	struct bpf_if *bp = (struct bpf_if *)arg;
 	struct bpf_d *d;
@@ -1081,11 +1079,11 @@ bpf_mtap(arg, m)
  * pkt is really an mbuf.
  */
 static void
-catchpacket(d, pkt, pktlen, snaplen, cpfn)
-	register struct bpf_d *d;
-	register u_char *pkt;
-	register u_int pktlen, snaplen;
-	register void (*cpfn)(const void *, void *, u_int);
+catchpacket(register struct bpf_d *d,
+            register u_char *pkt,
+            register u_int pktlen,
+            register u_int snaplen,
+            register void (*cpfn)(const void *, void *, u_int))
 {
 	register struct bpf_hdr *hp;
 	register int totlen, curlen;

@@ -89,8 +89,8 @@ domaininit()
 				(*pr->pr_init)();
 	}
 
-if (max_linkhdr < 16)		/* XXX */
-max_linkhdr = 16;
+    if (max_linkhdr < 16)		/* XXX */
+        max_linkhdr = 16;
 	max_hdr = max_linkhdr + max_protohdr;
 	max_datalen = MHLEN - max_hdr;
 	timeout(pffasttimo, (void *)0, 1);
@@ -98,8 +98,7 @@ max_linkhdr = 16;
 }
 
 struct protosw *
-pffindtype(family, type)
-	int family, type;
+pffindtype(int family, int type)
 {
 	register struct domain *dp;
 	register struct protosw *pr;
@@ -116,8 +115,7 @@ found:
 }
 
 struct protosw *
-pffindproto(family, protocol, type)
-	int family, protocol, type;
+pffindproto(int family, int protocol, int type)
 {
 	register struct domain *dp;
 	register struct protosw *pr;
@@ -141,14 +139,13 @@ found:
 	return (maybe);
 }
 
-net_sysctl(name, namelen, oldp, oldlenp, newp, newlen, p)
-	int *name;
-	u_int namelen;
-	void *oldp;
-	size_t *oldlenp;
-	void *newp;
-	size_t newlen;
-	struct proc *p;
+net_sysctl(int *name,
+           u_int namelen,
+           void *oldp,
+           size_t *oldlenp,
+           nvoid *ewp,
+           size_t newlen,
+           struct proc *p)
 {
 	register struct domain *dp;
 	register struct protosw *pr;
@@ -178,9 +175,7 @@ found:
 	return (ENOPROTOOPT);
 }
 
-pfctlinput(cmd, sa)
-	int cmd;
-	struct sockaddr *sa;
+pfctlinput(int cmd, struct sockaddr *sa)
 {
 	register struct domain *dp;
 	register struct protosw *pr;
@@ -192,8 +187,7 @@ pfctlinput(cmd, sa)
 }
 
 void
-pfslowtimo(arg)
-	void *arg;
+pfslowtimo(void *arg)
 {
 	register struct domain *dp;
 	register struct protosw *pr;
@@ -206,8 +200,7 @@ pfslowtimo(arg)
 }
 
 void
-pffasttimo(arg)
-	void *arg;
+pffasttimo(void *arg)
 {
 	register struct domain *dp;
 	register struct protosw *pr;

@@ -731,10 +731,7 @@ leput(register char *lebuf, register struct mbuf *m)
 /*
  * Process an ioctl request.
  */
-leioctl(ifp, cmd, data)
-	register struct ifnet *ifp;
-	int cmd;
-	caddr_t data;
+leioctl(register struct ifnet *ifp, int cmd, caddr_t data)
 {
 	register struct ifaddr *ifa = (struct ifaddr *)data;
 	struct le_softc *le = &le_softc[ifp->if_unit];

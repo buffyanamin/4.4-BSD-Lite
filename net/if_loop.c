@@ -78,8 +78,7 @@ struct	ifnet loif;
 
 /* ARGSUSED */
 void
-loopattach(n)
-	int n;
+loopattach(int n)
 {
 	register struct ifnet *ifp = &loif;
 
@@ -183,10 +182,7 @@ looutput(struct ifnet *ifp,
 
 /* ARGSUSED */
 void
-lortrequest(cmd, rt, sa)
-	int cmd;
-	struct rtentry *rt;
-	struct sockaddr *sa;
+lortrequest(int cmd, struct rtentry *rt, struct sockaddr *sa)
 {
 
 	if (rt)
@@ -198,10 +194,7 @@ lortrequest(cmd, rt, sa)
  */
 /* ARGSUSED */
 int
-loioctl(ifp, cmd, data)
-	register struct ifnet *ifp;
-	int cmd;
-	caddr_t data;
+loioctl(register struct ifnet *ifp, int cmd, caddr_t data)
 {
 	register struct ifaddr *ifa;
 	register struct ifreq *ifr;

@@ -153,8 +153,7 @@ rtfree(rt)
 }
 
 void
-ifafree(ifa)
-	register struct ifaddr *ifa;
+ifafree(register struct ifaddr *ifa)
 {
 	if (ifa == NULL)
 		panic("ifafree");
@@ -174,10 +173,12 @@ ifafree(ifa)
  *
  */
 int
-rtredirect(dst, gateway, netmask, flags, src, rtp)
-	struct sockaddr *dst, *gateway, *netmask, *src;
-	int flags;
-	struct rtentry **rtp;
+rtredirect(struct sockaddr *dst,
+           struct sockaddr *gateway,
+           struct sockaddr *netmask,
+           int flags,
+           struct sockaddr *src,
+           struct rtentry **rtp)
 {
 	register struct rtentry *rt;
 	int error = 0;
@@ -265,18 +266,15 @@ out:
 * Routing table ioctl interface.
 */
 int
-rtioctl(req, data, p)
-	int req;
-	caddr_t data;
-	struct proc *p;
+rtioctl(int req, caddr_tdata, struct proc *p)
 {
 	return (EOPNOTSUPP);
 }
 
 struct ifaddr *
-ifa_ifwithroute(flags, dst, gateway)
-	int flags;
-	struct sockaddr	*dst, *gateway;
+ifa_ifwithroute(int flags,
+                struct sockaddr *dst,
+                struct sockaddr *gateway)
 {
 	register struct ifaddr *ifa;
 	if ((flags & RTF_GATEWAY) == 0) {
@@ -322,10 +320,12 @@ ifa_ifwithroute(flags, dst, gateway)
 #define ROUNDUP(a) (a>0 ? (1 + (((a) - 1) | (sizeof(long) - 1))) : sizeof(long))
 
 int
-rtrequest(req, dst, gateway, netmask, flags, ret_nrt)
-	int req, flags;
-	struct sockaddr *dst, *gateway, *netmask;
-	struct rtentry **ret_nrt;
+rtrequest(int req,
+          struct sockaddr *dst,
+          struct sockaddr *gateway,
+          struct sockaddr *netmask,
+          int flags,
+          struct rtentry **ret_nrt)
 {
 	int s = splnet(); int error = 0;
 	register struct rtentry *rt;
@@ -418,9 +418,9 @@ bad:
 }
 
 int
-rt_setgate(rt0, dst, gate)
-	struct rtentry *rt0;
-	struct sockaddr *dst, *gate;
+rt_setgate(struct rtentry *rt0,
+           struct sockaddr *dst,
+           struct sockaddr *gate)
 {
 	caddr_t new, old;
 	int dlen = ROUNDUP(dst->sa_len), glen = ROUNDUP(gate->sa_len);
@@ -452,8 +452,9 @@ rt_setgate(rt0, dst, gate)
 }
 
 void
-rt_maskedcopy(src, dst, netmask)
-	struct sockaddr *src, *dst, *netmask;
+rt_maskedcopy(struct sockaddr *src,
+              struct sockaddr *dst,
+              struct sockaddr *netmask)
 {
 	register u_char *cp1 = (u_char *)src;
 	register u_char *cp2 = (u_char *)dst;
@@ -476,9 +477,9 @@ rt_maskedcopy(src, dst, netmask)
  * for an interface.
  */
 int
-rtinit(ifa, cmd, flags)
-	register struct ifaddr *ifa;
-	int cmd, flags;
+rtinit(register struct ifaddr *ifa,
+       int cmd,
+       int flags)
 {
 	register struct rtentry *rt;
 	register struct sockaddr *dst;

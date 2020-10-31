@@ -377,9 +377,7 @@ tcp_drain()
  * (for now, won't do anything until can select for soft error).
  */
 void
-tcp_notify(inp, error)
-	struct inpcb *inp;
-	int error;
+tcp_notify(struct inpcb *inp, int error)
 {
 	register struct tcpcb *tp = (struct tcpcb *)inp->inp_ppcb;
 	register struct socket *so = inp->inp_socket;
@@ -406,10 +404,7 @@ tcp_notify(inp, error)
 }
 
 void
-tcp_ctlinput(cmd, sa, ip)
-	int cmd;
-	struct sockaddr *sa;
-	register struct ip *ip;
+tcp_ctlinput(int cmd, struct sockaddr *sa, register struct ip *ip)
 {
 	register struct tcphdr *th;
 	extern struct in_addr zeroin_addr;
@@ -434,9 +429,7 @@ tcp_ctlinput(cmd, sa, ip)
  * to one segment.  We will gradually open it again as we proceed.
  */
 void
-tcp_quench(inp, errno)
-	struct inpcb *inp;
-	int errno;
+tcp_quench(struct inpcb *inp, int errno)
 {
 	struct tcpcb *tp = intotcpcb(inp);
 

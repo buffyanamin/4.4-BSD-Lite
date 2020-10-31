@@ -255,10 +255,7 @@ softclock()
  *	to timeout are used to identify entries for untimeout.
  */
 void
-timeout(ftn, arg, ticks)
-	void (*ftn) __P((void *));
-	void *arg;
-	register int ticks;
+timeout(void (*ftn) __P((void *)), void *arg, register int ticks)
 {
 	register struct callout *new, *p, *t;
 	register int s;
