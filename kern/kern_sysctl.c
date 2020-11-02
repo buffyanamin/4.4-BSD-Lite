@@ -83,10 +83,8 @@ struct sysctl_args {
 };
 
 int
-__sysctl(p, uap, retval)
-	struct proc *p;
-	register struct sysctl_args *uap;
-	int *retval;
+__sysctl(struct proc *p,
+         register struct sysctl_args *uap, int *retval)
 {
 	int error, dolock = 1;
 	u_int savelen, oldlen = 0;

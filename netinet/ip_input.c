@@ -544,8 +544,7 @@ dropfrag:
  * associated datagrams.
  */
 void
-ip_freef(fp)
-	struct ipq *fp;
+ip_freef(struct ipq *fp)
 {
 	register struct ipasfrag *q, *p;
 
@@ -633,8 +632,7 @@ ip_drain()
  * 0 if the packet should be processed further.
  */
 int
-ip_dooptions(m)
-	struct mbuf *m;
+ip_dooptions(struct mbuf *m)
 {
 	register struct ip *ip = mtod(m, struct ip *);
 	register u_char *cp;
@@ -825,8 +823,7 @@ bad:
  * return internet address info of interface to be used to get there.
  */
 struct in_ifaddr *
-ip_rtaddr(dst)
-	 struct in_addr dst;
+ip_rtaddr(struct in_addr dst)
 {
 	register struct sockaddr_in *sin;
 
@@ -853,9 +850,7 @@ ip_rtaddr(dst)
  * to be picked up later by ip_srcroute if the receiver is interested.
  */
 void
-save_rte(option, dst)
-	u_char *option;
-	struct in_addr dst;
+save_rte(u_char *option, struct in_addr dst)
 {
 	unsigned olen;
 
@@ -948,9 +943,8 @@ ip_srcroute()
  * XXX should be deleted; last arg currently ignored.
  */
 void
-ip_stripoptions(m, mopt)
-	register struct mbuf *m;
-	struct mbuf *mopt;
+ip_stripoptions(register struct mbuf *m,
+                struct mbuf *mopt)
 {
 	register int i;
 	struct ip *ip = mtod(m, struct ip *);
@@ -991,9 +985,7 @@ u_char inetctlerrmap[PRC_NCMDS] = {
  * via a source route.
  */
 void
-ip_forward(m, srcrt)
-	struct mbuf *m;
-	int srcrt;
+ip_forward(struct mbuf *m, int srcrt)
 {
 	register struct ip *ip = mtod(m, struct ip *);
 	register struct sockaddr_in *sin;

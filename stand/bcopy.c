@@ -37,10 +37,7 @@
  * This is designed to be small, not fast.
  */
 void
-bcopy(s1, s2, n)
-	const void *s1;
-	void *s2;
-	unsigned n;
+bcopy(const void *s1, void *s2, unsigned n)
 {
 	register const char *f = s1;
 	register char *t = s2;

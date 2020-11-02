@@ -66,12 +66,11 @@ static void ip_mloopback
  * The mbuf opt, if present, will not be freed.
  */
 int
-ip_output(m0, opt, ro, flags, imo)
-	struct mbuf *m0;
-	struct mbuf *opt;
-	struct route *ro;
-	int flags;
-	struct ip_moptions *imo;
+ip_output(struct mbuf *m0,
+          struct mbuf *opt,
+          struct route *ro,
+          int flags,
+          struct ip_moptions *imo)
 {
 	register struct ip *ip, *mhip;
 	register struct ifnet *ifp;
