@@ -115,10 +115,8 @@ struct listen_args {
 	int	backlog;
 };
 /* ARGSUSED */
-listen(p, uap, retval)
-	struct proc *p;
-	register struct listen_args *uap;
-	int *retval;
+listen(struct proc *p,
+       register struct listen_args *uap, int *retval)
 {
 	struct file *fp;
 	int error;
@@ -162,10 +160,9 @@ oaccept(p, uap, retval)
 #define	accept1	accept
 #endif
 
-accept1(p, uap, retval)
-	struct proc *p;
-	register struct accept_args *uap;
-	int *retval;
+accept1(struct proc *p,
+        register struct accept_args *uap,
+        int *retval)
 {
 	struct file *fp;
 	struct mbuf *nam;
@@ -244,10 +241,9 @@ struct connect_args {
 	int	namelen;
 };
 /* ARGSUSED */
-connect(p, uap, retval)
-	struct proc *p;
-	register struct connect_args *uap;
-	int *retval;
+connect(struct proc *p,
+        register struct connect_args *uap,
+        int *retval)
 {
 	struct file *fp;
 	register struct socket *so;
@@ -292,10 +288,8 @@ struct socketpair_args {
 	int	protocol;
 	int	*rsv;
 };
-socketpair(p, uap, retval)
-	struct proc *p;
-	register struct socketpair_args *uap;
-	int retval[];
+socketpair(struct proc *p,
+           register struct socketpair_args *uap, int retval[])
 {
 	register struct filedesc *fdp = p->p_fd;
 	struct file *fp1, *fp2;
@@ -354,10 +348,9 @@ struct sendto_args {
 	caddr_t	to;
 	int	tolen;
 };
-sendto(p, uap, retval)
-	struct proc *p;
-	register struct sendto_args *uap;
-	int *retval;
+sendto(struct proc *p,
+       register struct sendto_args *uap,
+       int *retval)
 {
 	struct msghdr msg;
 	struct iovec aiov;
@@ -444,10 +437,9 @@ struct sendmsg_args {
 	caddr_t	msg;
 	int	flags;
 };
-sendmsg(p, uap, retval)
-	struct proc *p;
-	register struct sendmsg_args *uap;
-	int *retval;
+sendmsg(struct proc *p,
+        register struct sendmsg_args *uap,
+        int *retval)
 {
 	struct msghdr msg;
 	struct iovec aiov[UIO_SMALLIOV], *iov;
@@ -478,11 +470,11 @@ done:
 	return (error);
 }
 
-sendit(p, s, mp, flags, retsize)
-	register struct proc *p;
-	int s;
-	register struct msghdr *mp;
-	int flags, *retsize;
+sendit(register struct proc *p,
+       int s,
+       register struct msghdr *mp,
+       int flags,
+       int retsize)
 {
 	struct file *fp;
 	struct uio auio;

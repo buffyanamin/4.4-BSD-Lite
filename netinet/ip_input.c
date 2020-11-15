@@ -403,9 +403,8 @@ bad:
  * is given as fp; otherwise have to make a chain.
  */
 struct ip *
-ip_reass(ip, fp)
-	register struct ipasfrag *ip;
-	register struct ipq *fp;
+ip_reass(register struct ipasfrag *ip,
+         register struct ipq *fp)
 {
 	register struct mbuf *m = dtom(ip);
 	register struct ipasfrag *q;
@@ -562,8 +561,8 @@ ip_freef(struct ipq *fp)
  * Like insque, but pointers in middle of structure.
  */
 void
-ip_enq(p, prev)
-	register struct ipasfrag *p, *prev;
+ip_enq(register struct ipasfrag *p,
+       register struct ipasfrag *prev)
 {
 
 	p->ipf_prev = prev;
@@ -576,11 +575,10 @@ ip_enq(p, prev)
  * To ip_enq as remque is to insque.
  */
 void
-ip_deq(p)
-	register struct ipasfrag *p;
+ip_deq(register struct ipasfrag *p)
 {
 
-	p->ipf_prev->ipf_next = p->ipf_next;
+    p->ipf_prev->ipf_next = p->ipf_next;
 	p->ipf_next->ipf_prev = p->ipf_prev;
 }
 

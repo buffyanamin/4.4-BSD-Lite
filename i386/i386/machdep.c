@@ -1022,8 +1022,8 @@ setsoftclock() {
  * insert an element into a queue 
  */
 #undef insque
-_insque(element, head)
-	register struct prochd *element, *head;
+_insque(register struct prochd *element,
+        register struct prochd *head)
 {
 	element->ph_link = head->ph_link;
 	head->ph_link = (struct proc *)element;
@@ -1035,8 +1035,7 @@ _insque(element, head)
  * remove an element from a queue
  */
 #undef remque
-_remque(element)
-	register struct prochd *element;
+_remque(register struct prochd *element)
 {
 	((struct prochd *)(element->ph_link))->ph_rlink = element->ph_rlink;
 	((struct prochd *)(element->ph_rlink))->ph_link = element->ph_link;
@@ -1048,8 +1047,11 @@ vmunaccess() {}
 /*
  * Below written in C to allow access to debugging code
  */
-copyinstr(fromaddr, toaddr, maxlength, lencopied) u_int *lencopied, maxlength;
-	void *toaddr, *fromaddr; {
+copyinstr(void *fromaddr,
+          void *toaddr,
+          u_int *maxlength,
+          u_int *lencopied)
+{
 	int c,tally;
 
 	tally = 0;
@@ -1070,8 +1072,11 @@ copyinstr(fromaddr, toaddr, maxlength, lencopied) u_int *lencopied, maxlength;
 	return(ENAMETOOLONG);
 }
 
-copyoutstr(fromaddr, toaddr, maxlength, lencopied) u_int *lencopied, maxlength;
-	void *fromaddr, *toaddr; {
+copyoutstr(void *fromaddr,
+          void *toaddr,
+          u_int *maxlength,
+          u_int *lencopied)
+{
 	int c;
 	int tally;
 
@@ -1089,8 +1094,11 @@ copyoutstr(fromaddr, toaddr, maxlength, lencopied) u_int *lencopied, maxlength;
 	return(ENAMETOOLONG);
 }
 
-copystr(fromaddr, toaddr, maxlength, lencopied) u_int *lencopied, maxlength;
-	void *fromaddr, *toaddr; {
+copystr(void *fromaddr,
+        void *toaddr,
+        u_int *maxlength,
+        u_int *lencopied)
+{
 	u_int tally;
 
 	tally = 0;

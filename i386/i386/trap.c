@@ -78,8 +78,7 @@ extern short cpl;
  */
 
 /*ARGSUSED*/
-trap(frame)
-	struct trapframe frame;
+trap(struct trapframe frame)
 {
 	register int i;
 	register struct proc *p = curproc;
@@ -300,8 +299,7 @@ out:
  * Like trap(), argument is call by reference.
  */
 /*ARGSUSED*/
-syscall(frame)
-	volatile struct syscframe frame;
+syscall(volatile struct syscframe frame)
 {
 	register int *locr0 = ((int *)&frame);
 	register caddr_t params;

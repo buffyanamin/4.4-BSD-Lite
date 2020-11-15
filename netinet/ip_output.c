@@ -437,8 +437,7 @@ ip_insertoptions(m, opt, phlen)
  * omitting those not copied during fragmentation.
  */
 int
-ip_optcopy(ip, jp)
-	struct ip *ip, *jp;
+ip_optcopy(struct ip *ip, struct ip *jp)
 {
 	register u_char *cp, *dp;
 	int opt, optlen, cnt;

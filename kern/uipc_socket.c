@@ -54,11 +54,10 @@
  * switching out to the protocol specific routines.
  */
 /*ARGSUSED*/
-socreate(dom, aso, type, proto)
-	int dom;
-	struct socket **aso;
-	register int type;
-	int proto;
+socreate(int dom,
+         struct socket **aso,
+         register int type,
+         int proto)
 {
 	struct proc *p = curproc;		/* XXX */
 	register struct protosw *prp;
@@ -91,9 +90,8 @@ socreate(dom, aso, type, proto)
 	return (0);
 }
 
-sobind(so, nam)
-	struct socket *so;
-	struct mbuf *nam;
+sobind(struct socket *so,
+       struct mbuf *nam)
 {
 	int s = splnet();
 	int error;
@@ -105,9 +103,7 @@ sobind(so, nam)
 	return (error);
 }
 
-solisten(so, backlog)
-	register struct socket *so;
-	int backlog;
+solisten(register struct socket *so, int backlog)
 {
 	int s = splnet(), error;
 
@@ -127,8 +123,7 @@ solisten(so, backlog)
 	return (0);
 }
 
-sofree(so)
-	register struct socket *so;
+sofree(register struct socket *so)
 {
 
 	if (so->so_pcb || (so->so_state & SS_NOFDREF) == 0)
@@ -148,8 +143,7 @@ sofree(so)
  * Initiate disconnect if connected.
  * Free socket when disconnect complete.
  */
-soclose(so)
-	register struct socket *so;
+soclose(register struct socket *so)
 {
 	int s = splnet();		/* conservative */
 	int error = 0;
@@ -198,8 +192,7 @@ discard:
 /*
  * Must be called at splnet...
  */
-soabort(so)
-	struct socket *so;
+soabort(struct socket *so)
 {
 
 	return (
@@ -207,9 +200,8 @@ soabort(so)
 		(struct mbuf *)0, (struct mbuf *)0, (struct mbuf *)0));
 }
 
-soaccept(so, nam)
-	register struct socket *so;
-	struct mbuf *nam;
+soaccept(register struct socket *so,
+         struct mbuf *nam)
 {
 	int s = splnet();
 	int error;
@@ -223,9 +215,8 @@ soaccept(so, nam)
 	return (error);
 }
 
-soconnect(so, nam)
-	register struct socket *so;
-	struct mbuf *nam;
+soconnect(register struct socket *so,
+          struct mbuf *nam)
 {
 	int s;
 	int error;
@@ -250,9 +241,8 @@ soconnect(so, nam)
 	return (error);
 }
 
-soconnect2(so1, so2)
-	register struct socket *so1;
-	struct socket *so2;
+soconnect2(register struct socket *so1,
+           struct socket *so2)
 {
 	int s = splnet();
 	int error;
@@ -263,8 +253,7 @@ soconnect2(so1, so2)
 	return (error);
 }
 
-sodisconnect(so)
-	register struct socket *so;
+sodisconnect(register struct socket *so)
 {
 	int s = splnet();
 	int error;
@@ -302,13 +291,12 @@ bad:
  * must check for short counts if EINTR/ERESTART are returned.
  * Data and control buffers are freed on return.
  */
-sosend(so, addr, uio, top, control, flags)
-	register struct socket *so;
-	struct mbuf *addr;
-	struct uio *uio;
-	struct mbuf *top;
-	struct mbuf *control;
-	int flags;
+sosend(register struct socket *so,
+       struct mbuf *addr,
+       struct uio *uio,
+       struct mbuf *top,
+       struct mbuf *control,
+       int flags)
 {
 	struct proc *p = curproc;		/* XXX */
 	struct mbuf **mp;
@@ -477,13 +465,12 @@ out:
  * an mbuf **mp0 for use in returning the chain.  The uio is then used
  * only for the count in uio_resid.
  */
-soreceive(so, paddr, uio, mp0, controlp, flagsp)
-	register struct socket *so;
-	struct mbuf **paddr;
-	struct uio *uio;
-	struct mbuf **mp0;
-	struct mbuf **controlp;
-	int *flagsp;
+soreceive(register struct socket *so,
+          struct mbuf **paddr,
+          struct uio *uio,
+          struct mbuf **mp0,
+          struct mbuf **controlp,
+          int *flagsp)
 {
 	register struct mbuf *m, **mp;
 	register int flags, len, error, s, offset;
@@ -775,9 +762,8 @@ release:
 	return (error);
 }
 
-soshutdown(so, how)
-	register struct socket *so;
-	register int how;
+soshutdown(register struct socket *so,
+           register int how)
 {
 	register struct protosw *pr = so->so_proto;
 
@@ -790,8 +776,7 @@ soshutdown(so, how)
 	return (0);
 }
 
-sorflush(so)
-	register struct socket *so;
+sorflush(register struct socket *so)
 {
 	register struct sockbuf *sb = &so->so_rcv;
 	register struct protosw *pr = so->so_proto;

@@ -820,9 +820,9 @@ dumpwb(num, s, a, d)
 /*
  * Proces a system call.
  */
-syscall(code, frame)
-	u_int code;
-	struct frame frame;
+syscall(u_int code, frame)
+    u_int code;
+    struct frame frame;
 {
 	register caddr_t params;
 	register struct sysent *callp;
